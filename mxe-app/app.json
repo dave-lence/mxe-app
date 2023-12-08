@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "mxe-app",
+    "slug": "mxe-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/MXE Icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./src/assets/MXE Icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/MXE Icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.ogmeech.mxeapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "74dd2ff4-acbd-43ed-b7e2-e515b85d5266"
+      }
+    }
+  }
+}
