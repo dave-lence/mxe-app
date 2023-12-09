@@ -92,6 +92,7 @@ const SignUpScreenTwo = ({navigation}) => {
           </Text>
         )}
         <TextInput
+         style={{fontSize:16, width:"100%"}}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           placeholder={focus ? "" : "Your Email"}

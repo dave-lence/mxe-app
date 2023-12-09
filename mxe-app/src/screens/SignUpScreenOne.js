@@ -153,11 +153,12 @@ const CustomTextField = ({
       }}
     >
       {onFocus && (
-        <Text style={{ marginBottom: 1, color: ColorTheme.lightGray2 }}>
+        <Text style={{ marginBottom: 1,  color: ColorTheme.lightGray2 }}>
           {label}
         </Text>
       )}
       <TextInput
+        style={{fontSize:16, width:"100%"}}
         onFocus={onFocus}
         onBlur={onBlur}
         placeholder={onFocus ? "" : placeHolder}

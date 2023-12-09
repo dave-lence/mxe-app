@@ -30,7 +30,7 @@ const LoginNewUserScreen = ({navigation}) => {
     <KeyboardAvoidingView style={{flex:1}}  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View style={styles.container}>
       <View style={[styles.header, { marginVertical: 10 }]}>
-        <View
+        <TouchableOpacity
           style={{
             alignSelf: "flex-end",
             height: 35,
@@ -42,11 +42,12 @@ const LoginNewUserScreen = ({navigation}) => {
             justifyContent:"center",
             borderRadius:5,
           }}
+          onPress={() => navigation.navigate("SignUpScreen")}
         >
           <Text style={{ color: ColorTheme.darkBlue, fontWeight: "bold" }}>
             Create account
           </Text>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.welcomeText}>Welcome back!</Text>
         <Text style={styles.descriptionText}>
           Enter your phone number to link this phone to your account

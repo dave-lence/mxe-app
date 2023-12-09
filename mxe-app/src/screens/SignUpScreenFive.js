@@ -1,10 +1,16 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
 
-const SignUpScreenFive = ({navigation}) => {
+const SignUpScreenFive = ({ navigation }) => {
   const [focus, setFocus] = useState(false);
   const [userName, setUserName] = useState("");
   return (
@@ -22,7 +28,7 @@ const SignUpScreenFive = ({navigation}) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            navigation.goBack()
+            navigation.goBack();
           }}
         >
           <MaterialIcons
@@ -96,6 +102,7 @@ const SignUpScreenFive = ({navigation}) => {
           </Text>
         )}
         <TextInput
+          style={{ fontSize: 16, width: "100%" }}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           placeholder={focus ? "" : "@ tag"}
@@ -104,7 +111,7 @@ const SignUpScreenFive = ({navigation}) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-      disabled={userName == "" ? true : false}
+        disabled={userName == "" ? true : false}
         style={{
           alignSelf: "center",
           height: 48,
