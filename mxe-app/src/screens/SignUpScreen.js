@@ -4,18 +4,20 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ScrollView,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import PhoneInput from "react-native-phone-number-input";
-import CustomButton from "../components/CustomButton";
 import appLogo from "../assets/apple.png";
 import googleLogo from "../assets/googlelog.png";
+import { Button } from "react-native-paper";
 
-const SignUpScreen = ({navigation}) => {
+const SignUpScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [autoFocus, setAutoFocus] = useState(true);
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(false);
   const phoneInput = useRef(null);
@@ -29,157 +31,246 @@ const SignUpScreen = ({navigation}) => {
   };
 
   return (
-    <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex:1}}>
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: ColorTheme.white,
-        paddingHorizontal: 15,
-      }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
     >
-      {/** header */}
       <View
         style={{
-          marginVertical: 10,
-          justifyContent: "start",
-          alignItems: "start", 
+          flex: 1,
+          backgroundColor: ColorTheme.white,
+          paddingHorizontal: 15,
         }}
       >
-        <TouchableOpacity
+        {/** header */}
+        <View
           style={{
-            alignSelf: "flex-end",
-            height: 35,
-            width: 100,
             marginTop: 40,
-            backgroundColor: ColorTheme.lightBlue,
-            padding: 5,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 5,
+            justifyContent: "start",
+            alignItems: "start",
           }}
-          onPress={() => navigation.navigate('LoginOldUser')}
         >
-          <Text style={{ color: ColorTheme.darkBlue, fontWeight: "bold" }}>
-            Login
+          <Button
+            style={{
+              backgroundColor: ColorTheme.lightBlue,
+              width: 130,
+              position: "relative",
+              left: "60%",
+              padding: 0,
+              borderRadius: 8,
+            }}
+            mode="elevated"
+            onPress={() => navigation.navigate("LoginOldUser")}
+          >
+            <Text
+              style={{
+                color: ColorTheme.darkBlue,
+                fontWeight: "700",
+                fontSize: 16,
+              }}
+            >
+              Login
+            </Text>
+          </Button>
+
+          <Text style={{ fontWeight: "bold", fontSize: 34, marginVertical: 5 }}>
+            Create your account
           </Text>
-        </TouchableOpacity>
-        <Text style={{ fontWeight: "bold", fontSize: 34, marginVertical: 5 }}>
-          Create your account
-        </Text>
-        <Text
+          <Text
+            style={{
+              flexDirection: "row",
+              alignContent: "center",
+              alignItems: "center",
+              marginTop: 10,
+              color: ColorTheme.lightGray2,
+            }}
+          >
+            Start building your design system with our component library{" "}
+          </Text>
+        </View>
+
+        {/**phone */}
+
+        <View
+          style={{
+            backgroundColor: ColorTheme.white,
+            borderColor: autoFocus ? ColorTheme.lightBlue2 : ColorTheme.gray,
+            borderWidth: 1,
+            height: 55,
+            borderRadius: 6,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 30,
+            padding: 5,
+          }}
+        >
+          <PhoneInput
+            ref={phoneInput}
+            defaultValue={phoneNumber}
+            defaultCode="NG"
+            layout="first"
+            value={phoneNumber}
+            onChangeText={handlePhoneInputChange}
+            onChangeFormattedText={(text) => {
+              setFormattedValue(text);
+            }}
+            countryPickerButtonStyle={{
+              marginRight: -40,
+            }}
+            withDarkTheme
+            codeTextStyle={{ height: 22 }}
+            containerStyle={{
+              width: "90",
+            }}
+            textContainerStyle={{
+              backgroundColor: "white",
+            }}
+            textInputProps={{
+              keyboardAppearance: "dark",
+              keyboardType:
+                Platform.OS === "ios" ? "name-phone-pad" : "number-pad",
+            }}
+            autoFocus={autoFocus}
+          />
+        </View>
+
+        {/**btn */}
+        <View style={{ marginTop: 20 }}>
+          <TouchableOpacity
+            disabled={valid ? false : true}
+            style={{
+              alignSelf: "center",
+              height: 48,
+              width: 361,
+              borderRadius: 10,
+              backgroundColor: !valid
+                ? ColorTheme.darkGray
+                : ColorTheme.darkBlue,
+              alignItems: "center",
+              marginTop: 38,
+              justifyContent: "center",
+              ...Platform.select({
+                ios: {
+                  shadowColor: "black",
+                  shadowOpacity: 0.3,
+                  shadowRadius: 5,
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                },
+                android: {
+                  elevation: 10,
+                },
+              }),
+            }}
+            onPress={() => {
+              setLoading(true);
+              setTimeout(() => {
+                navigation.navigate("SignUpVerification");
+                setLoading(false);
+              }, 1500);
+            }}
+          >
+            {loading ? (
+              <ActivityIndicator size={34} color={ColorTheme.white} />
+            ) : (
+              <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
+                Get Started
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
+
+        <View
           style={{
             flexDirection: "row",
-            alignContent: "center",
             alignItems: "center",
-            marginTop: 10,
-            color: ColorTheme.lightGray2,
+            justifyContent: "center",
+            marginVertical: 30,
           }}
         >
-          Start building your design system with our component library{" "}
-        </Text>
-      </View>
+          <View
+            style={{
+              flex: 1,
+              height: 1,
+              backgroundColor: ColorTheme.lightGray,
+            }}
+          ></View>
+          <Text style={{ marginHorizontal: 20, color: ColorTheme.lightGray }}>
+            Or
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              height: 1,
+              backgroundColor: ColorTheme.lightGray,
+            }}
+          ></View>
+        </View>
 
-      {/**phone */}
+        {/**sign up option buttons */}
 
-      <PhoneInput
-        ref={phoneInput}
-        defaultValue={phoneNumber}
-        defaultCode="NG"
-        layout="first"
-        value={phoneNumber}
-        
-        onChangeText={handlePhoneInputChange}
-        onChangeFormattedText={(text) => {
-          setFormattedValue(text);
-        }}
-        withDarkTheme
-        codeTextStyle={{ height: 22 }}
-        containerStyle={{
-          borderColor: ColorTheme.darkGray,
-          width: "90",
-          borderRadius: 6,
-          marginTop: 30,
-        }}
-        textContainerStyle={{
-          backgroundColor: ColorTheme.white,
-          borderColor: ColorTheme.darkGray,
-          borderWidth: 1,
-          height: 55,
-          borderRadius: 6,
-        }}
-         textInputProps={{keyboardAppearance:"dark", keyboardType: Platform.OS === 'ios' ? "name-phone-pad" : "number-pad"}}
-        autoFocus={false}
-      />
-
-      {/**btn */}
-      <View style={{ marginTop: 20 }}>
-        <CustomButton
-           
-          disabled={valid ? false : true}
-          width={"100%"}
-          textColor={ColorTheme.white}
-          height={48}
-          backgroundColor={valid ? ColorTheme.darkBlue : ColorTheme.gray}
-          btnTile={"Get Started"}
-          onPress={() => {
-            navigation.navigate('SignUpScreenOne', )
+        <Button
+          mode="elevated"
+          icon={"apple"}
+          buttonColor={ColorTheme.black}
+          role="button"
+          rippleColor={ColorTheme.gray}
+          labelStyle={{ color: ColorTheme.white, width: "80%" }}
+          style={{
+            width: "100%",
+            borderRadius: 10,
+            height: 48,
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 10,
           }}
-        />
-      </View>
+          onPress={() => {}}
+        >
+          <Text style={{ fontWeight: "bold" }}>Continue with Apple</Text>
+        </Button>
 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 30,
-        }}
-      >
+        <Button
+          mode="outlined"
+          buttonColor={ColorTheme.white}
+          role="button"
+          rippleColor={ColorTheme.gray}
+          labelStyle={{ width: "80%" }}
+          style={{
+            width: "100%",
+            borderRadius: 10,
+            height: 48,
+            justifyContent: "center",
+            alignItems: "center",
+            marginVertical: 10,
+          }}
+          icon={"google"}
+          onPress={() => {}}
+        >
+          <Text style={{ fontWeight: "bold", color: ColorTheme.black }}>
+            Continue with Google
+          </Text>
+        </Button>
+
         <View
-          style={{ flex: 1, height: 1, backgroundColor: ColorTheme.lightGray }}
-        ></View>
-        <Text style={{ marginHorizontal: 20, color: ColorTheme.lightGray }}>
-          Or
-        </Text>
-        <View
-          style={{ flex: 1, height: 1, backgroundColor: ColorTheme.lightGray }}
-        ></View>
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 30,
+            paddingHorizontal: 15,
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ textAlign: "center", color: ColorTheme.lightGray2 }}>
+            By continuing, you agree to our{" "}
+            <Text style={{ color: ColorTheme.darkBlue }}>Terms of Service</Text>{" "}
+            and{" "}
+            <Text style={{ color: ColorTheme.darkBlue }}>Privacy Policy.</Text>
+          </Text>
+        </View>
       </View>
-
-      {/**sign up option buttons */}
-      <SignUpCustomBtn
-        logoPath={appLogo}
-        backgroundColor={ColorTheme.black}
-        borderColor={ColorTheme.black}
-        signUpText={"Continue with Apple"}
-        textColor={ColorTheme.white}
-      />
-      <SignUpCustomBtn
-        logoPath={googleLogo}
-        backgroundColor={ColorTheme.white}
-        borderColor={ColorTheme.black}
-        signUpText={"Continue with Google"}
-        textColor={ColorTheme.black}
-      />
-
-      <View
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 30,
-          paddingHorizontal: 15,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ textAlign: "center", color: ColorTheme.lightGray2 }}>
-          By continuing, you agree to our{" "}
-          <Text style={{ color: ColorTheme.darkBlue }}>Terms of Service</Text>{" "}
-          and{" "}
-          <Text style={{ color: ColorTheme.darkBlue }}>Privacy Policy.</Text>
-        </Text>
-      </View>
-    </View>
     </KeyboardAvoidingView>
   );
 };
@@ -200,11 +291,7 @@ const SignUpCustomBtn = ({
       style={{
         flexDirection: "row",
         backgroundColor: backgroundColor,
-        borderRadius: 5,
-        height: 48,
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical: 10,
+
         borderColor: borderColor,
         borderWidth: 1,
       }}

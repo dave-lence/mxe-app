@@ -1,23 +1,40 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
-import { CodeField,
+import {
+  CodeField,
   Cursor,
   useBlurOnFulfill,
-  useClearByFocusCell, } from "react-native-confirmation-code-field";
+  useClearByFocusCell,
+} from "react-native-confirmation-code-field";
+import { ActivityIndicator } from "react-native-paper";
 
-const SignUpScreenThree = ({navigation}) => {
+const SignUpScreenThree = ({ navigation }) => {
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const [activeButton, setActiveButton] = useState(null);
-
+  const [progress, setProgress] = useState(0.4);
+  const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (progress < 1) {
+        setProgress((prevProgress) => (prevProgress = 0.6));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [progress]);
 
   const handleNumberPress = (number) => {
     if (value.length < 4) {
@@ -37,7 +54,7 @@ const SignUpScreenThree = ({navigation}) => {
       }, 100);
     }
   };
-  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "#", "0", "⌫", ];
+  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "#", "0", "⌫"];
   return (
     <View
       style={{
@@ -53,7 +70,7 @@ const SignUpScreenThree = ({navigation}) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            navigation.goBack()
+            navigation.goBack();
           }}
         >
           <MaterialIcons
@@ -74,7 +91,7 @@ const SignUpScreenThree = ({navigation}) => {
         >
           <ProgressBar
             color={ColorTheme.lightBlue2}
-            progress={0.6}
+            progress={progress}
             width={120}
             height={7}
           />
@@ -98,61 +115,81 @@ const SignUpScreenThree = ({navigation}) => {
       </View>
 
       {/**pin fileds */}
-      <View style={{paddingHorizontal:30, marginTop:18}}>
-      <CodeField
-        ref={ref}
-        {...props}        
-        caretHidden={false}
-        value={value}
-        editable={false}
-        onChangeText={setValue}
-        cellCount={CELL_COUNT}
-        rootStyle={styles.codeFieldRoot}
-        keyboardType="number-pad"
-        secureTextEntry={true}
-        textContentType="oneTimeCode"
-        renderCell={({ index, symbol, isFocused }) => (
-          <Text
-            key={index}
-            style={[
-              styles.cell,
-              isFocused && styles.focusCell,
-              {
-                alignSelf: "center",
-                alignItems: "center",
-                alignContent: "center",
-              },
-            ]}
-            onLayout={getCellOnLayoutHandler(index)}
-          >
-            {symbol ? "*" : (isFocused ? <Cursor /> : null)}
-          </Text>
-        )}
-      />
+      <View style={{ paddingHorizontal: 30, marginTop: 18 }}>
+        <CodeField
+          ref={ref}
+          {...props}
+          caretHidden={false}
+          value={value}
+          editable={false}
+          onChangeText={setValue}
+          cellCount={CELL_COUNT}
+          rootStyle={styles.codeFieldRoot}
+          keyboardType="number-pad"
+          secureTextEntry={true}
+          textContentType="oneTimeCode"
+          renderCell={({ index, symbol, isFocused }) => (
+            <Text
+              key={index}
+              style={[
+                styles.cell,
+                isFocused && styles.focusCell,
+                {
+                  alignSelf: "center",
+                  alignItems: "center",
+                  alignContent: "center",
+                },
+              ]}
+              onLayout={getCellOnLayoutHandler(index)}
+            >
+              {symbol ? "*" : isFocused ? <Cursor /> : null}
+            </Text>
+          )}
+        />
       </View>
 
-
-      
       <TouchableOpacity
-      disabled={value.length != 4 ? true : false}
+        disabled={value.length != 4 ? true : false}
         style={{
           alignSelf: "center",
           height: 48,
           width: 361,
-          borderRadius: 5,
+          borderRadius: 10,
           backgroundColor:
-            value.length != 4
-              ? ColorTheme.darkGray
-              : ColorTheme.darkBlue,
+            value.length != 4 ? ColorTheme.darkGray : ColorTheme.darkBlue,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",
+          ...Platform.select({
+            ios: {
+              shadowColor: 'black',
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+            },
+            android: {
+              elevation: 10,
+            },
+          }),
         }}
-        onPress={() => navigation.navigate("SignUpScreenFour")}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            navigation.navigate("SignUpScreenFour");
+            setLoading(false);
+          }, 1500);
+        }}
       >
-        <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
-          Next
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={34} color={ColorTheme.white} />
+        ) : (
+          <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
+            Next
+          </Text>
+        )}
       </TouchableOpacity>
 
       <View
@@ -208,7 +245,7 @@ const styles = StyleSheet.create({
   cell: {
     width: 50,
     height: 50,
-    lineHeight: 47,
+    lineHeight: 57,
     marginHorizontal: 10,
     borderRadius: 25,
     fontSize: 24,

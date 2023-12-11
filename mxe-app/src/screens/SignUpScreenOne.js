@@ -1,21 +1,31 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-  TextInput,
-} from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
+import { ActivityIndicator, TextInput } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUpScreenOne = ({ navigation }) => {
-  const [focus, setFocus] = useState(false);
-  const [focusTwo, setFocusTwo] = useState(false);
+  const [error, setError] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (progress < 1) {
+        setProgress((prevProgress) => (prevProgress = 0.2));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [progress]);
+
   return (
     <View
       style={{
@@ -52,7 +62,7 @@ const SignUpScreenOne = ({ navigation }) => {
         >
           <ProgressBar
             color={ColorTheme.lightBlue2}
-            progress={0.2}
+            progress={progress}
             width={120}
             height={7}
           />
@@ -65,36 +75,47 @@ const SignUpScreenOne = ({ navigation }) => {
         What’s your legal name?
       </Text>
 
-      <CustomTextField
-        label={"First Name"}
-        onPress={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        onFocus={() => setFocus(true)}
-        placeHolder={"First Name"}
-        onChangeText={(text) => {
+      <TextInput
+        label="First Name"
+        value={firstName}
+        blurOnSubmit={true}
+        error={error}
+        enablesReturnKeyAutomatically={true}
+        activeOutlineColor={ColorTheme.lightBlue2}
+        style={{ backgroundColor: ColorTheme.white, marginBottom: 10 }}
+        mode="outlined"
+        onChangeText={async (text) => {
           setFirstName(text);
+          console.log(text)
+          await AsyncStorage.setItem("firstName", text);
         }}
-        borderColor={focus ? ColorTheme.lightBlue2 : ColorTheme.lightGray2}
       />
-      <CustomTextField
-        onChangeText={(text) => setLastName(text)}
-        onBlur={() => setFocusTwo(false)}
-        label={"Last Name"}
-        onPress={() => setFocusTwo(true)}
-        onFocus={() => setFocusTwo(true)}
-        placeHolder={"Last Name"}
-        borderColor={focusTwo ? ColorTheme.lightBlue2 : ColorTheme.lightGray2}
+
+      <TextInput
+        label="Last Name"
+        value={lastName}
+        blurOnSubmit={true}
+        error={error}
+        enablesReturnKeyAutomatically={true}
+        activeOutlineColor={ColorTheme.lightBlue2}
+        style={{ backgroundColor: ColorTheme.white, marginBottom: 0 }}
+        mode="outlined"
+        onChangeText={async (text) => {
+          setLastName(text);
+          
+          await AsyncStorage.setItem("lastName", text);
+        }}
       />
 
       <TouchableOpacity
         disabled={
-          firstName == "" ? true : false && lastName == "" ? true : false
+          firstName == "" ? true : false && lastName == " " ? true : false
         }
         style={{
           alignSelf: "center",
           height: 48,
           width: 361,
-          borderRadius: 5,
+          borderRadius: 10,
           backgroundColor:
             firstName == ""
               ? ColorTheme.darkGray
@@ -102,14 +123,38 @@ const SignUpScreenOne = ({ navigation }) => {
               ? ColorTheme.darkGray
               : ColorTheme.darkBlue,
           alignItems: "center",
-          marginTop: 88,
+          marginTop: 38,
           justifyContent: "center",
+          ...Platform.select({
+            ios: {
+              shadowColor: "black",
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+            },
+            android: {
+              elevation: 10,
+            },
+          }),
         }}
-        onPress={() => navigation.navigate("SignUpScreenTwo")}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            navigation.navigate("SignUpScreenTwo");
+            setLoading(false);
+          }, 1500);
+        }}
       >
-        <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
-          Next
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={34} color={ColorTheme.white} />
+        ) : (
+          <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
+            Next
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -118,52 +163,3 @@ const SignUpScreenOne = ({ navigation }) => {
 export default SignUpScreenOne;
 
 const styles = StyleSheet.create({});
-
-const CustomTextField = ({
-  onFocus,
-  borderColor,
-  label,
-  onPress,
-  onBlur,
-  placeHolder,
-  onChangeText,
-}) => {
-  return (
-    <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={10}
-      style={{
-        marginVertical: 10,
-        height: 50,
-        width3: 361,
-        borderWidth: 1,
-        borderColor: borderColor,
-        borderRadius: 5,
-        padding: 3,
-        paddingHorizontal: 5,
-        shadowColor: onFocus ? ColorTheme.lightBlue2 : "#FFF",
-        shadowRadius: onFocus ? 3 : 0,
-        backgroundColor: ColorTheme.white,
-        shadowOpacity: onFocus ? 0.25 : 0,
-        elevation: onFocus ? 10 : 0,
-        shadowOffset: {
-          width: 0,
-          height: 0.5,
-        },
-      }}
-    >
-      {onFocus && (
-        <Text style={{ marginBottom: 1,  color: ColorTheme.lightGray2 }}>
-          {label}
-        </Text>
-      )}
-      <TextInput
-        style={{fontSize:16, width:"100%"}}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        placeholder={onFocus ? "" : placeHolder}
-        onChangeText={onChangeText}
-      />
-    </TouchableOpacity>
-  );
-};

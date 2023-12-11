@@ -4,17 +4,31 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
-  TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
+import { ActivityIndicator, TextInput } from "react-native-paper";
 
-const SignUpScreenTwo = ({navigation}) => {
-  const [focus, setFocus] = useState(false);
+const SignUpScreenTwo = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [progress, setProgress] = useState(0.2);
+  const [loading, setLoading] = useState(false);
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (progress < 1) {
+        setProgress((prevProgress) => (prevProgress = 0.4));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [progress]);
   return (
     <View
       style={{
@@ -29,7 +43,9 @@ const SignUpScreenTwo = ({navigation}) => {
             backgroundColor: ColorTheme.white,
             borderRadius: 10,
           }}
-          onPress={() => {navigation.goBack()}}
+          onPress={() => {
+            navigation.goBack();
+          }}
         >
           <MaterialIcons
             name="arrow-back-ios"
@@ -49,7 +65,7 @@ const SignUpScreenTwo = ({navigation}) => {
         >
           <ProgressBar
             color={ColorTheme.lightBlue2}
-            progress={0.4}
+            progress={progress}
             width={120}
             height={7}
           />
@@ -62,62 +78,59 @@ const SignUpScreenTwo = ({navigation}) => {
         What’s your email?
       </Text>
 
-      <TouchableOpacity
-        onPress={() => setFocus(true)}
-        activeOpacity={10}
-      
-        style={{
-          marginVertical: 10,
-          height: 50,
-          width3: 361,
-          borderWidth: 1,
-          borderColor: focus ? ColorTheme.lightBlue2 : ColorTheme.lightGray2,
-          borderRadius: 5,
-          padding: 3,
-          paddingHorizontal: 5,
-          shadowColor: focus ? ColorTheme.lightBlue2 : "#FFF",
-          shadowRadius: focus ? 3 : 0,
-          backgroundColor: ColorTheme.white,
-          shadowOpacity: focus ? 0.50 : 0,
-          elevation: focus ? 10 : 0,
-          shadowOffset: {
-            width: 0,
-            height: 0.5,
-          },
-        }}
-      >
-        {focus && (
-          <Text style={{ marginBottom: 1, color: ColorTheme.lightGray2 }}>
-            Email address
-          </Text>
-        )}
-        <TextInput
-         style={{fontSize:16, width:"100%"}}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
-          placeholder={focus ? "" : "Your Email"}
-          onChangeText={(text) => setEmail(text)}
-        />
-      </TouchableOpacity>
+      <TextInput
+        label="Email"
+        value={email}
+        blurOnSubmit={true}
+        enablesReturnKeyAutomatically={true}
+        activeOutlineColor={ColorTheme.lightBlue2}
+        style={{ backgroundColor: ColorTheme.white, marginBottom: 10 }}
+        mode="outlined"
+        onChangeText={(text) => setEmail(text)}
+      />
 
       <TouchableOpacity
-      disabled={email == " " ? true : false}
+        disabled={email == "" ? true : false}
         style={{
           alignSelf: "center",
           height: 48,
           width: 361,
-          borderRadius: 5,
+          borderRadius: 10,
           backgroundColor:
             email == "" ? ColorTheme.darkGray : ColorTheme.darkBlue,
           alignItems: "center",
-          marginTop: 88,
+          marginTop: 38,
           justifyContent: "center",
+          ...Platform.select({
+            ios: {
+              shadowColor: "black",
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+            },
+            android: {
+              elevation: 10,
+            },
+          }),
         }}
-        onPress={() => navigation.navigate("SignUpScreenThree")}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            navigation.navigate("SignUpScreenThree");
+            setLoading(false);
+          }, 1500);
+        }}
       >
-        <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
-          Next
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={34} color={ColorTheme.white} />
+        ) : (
+          <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
+            Next
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );

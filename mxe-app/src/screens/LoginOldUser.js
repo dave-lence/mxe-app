@@ -8,6 +8,7 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
+import { Button } from "react-native-paper";
 
 const LoginOldUser = ({navigation}) => {
   const CELL_COUNT = 4;
@@ -49,30 +50,35 @@ const LoginOldUser = ({navigation}) => {
       {/** header */}
       <View
         style={{
-          marginVertical: 10,
+          marginVertical: 40,
           justifyContent: "center",
           alignItems: "center",
           alignContent: "center",
         }}
       >
-        <TouchableOpacity
-          style={{
-            alignSelf: "flex-end",
-            height: 35,
-            width: 100,
-            marginTop: 40,
-            backgroundColor: ColorTheme.lightBlue,
-            padding: 5,
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius:5,
-          }}
-          onPress={() => navigation.navigate('SignUpScreen')}
-        >
-          <Text style={{ color: ColorTheme.darkBlue, fontWeight: "bold" }}>
-            Not Dave?
-          </Text>
-        </TouchableOpacity>
+        <Button
+            style={{
+              backgroundColor: ColorTheme.lightBlue,
+              width: 130,
+              position: "relative",
+              left: "30%",
+              padding: 0,
+              borderRadius: 8,
+            }}
+            
+            mode="elevated"
+            onPress={() => navigation.navigate("SignUpScreen")}
+          >
+            <Text
+              style={{
+                color: ColorTheme.darkBlue,
+                fontWeight: "700",
+                fontSize: 16,
+              }}
+            >
+              Not David?
+            </Text>
+          </Button>
         <View
           style={{
             alignSelf: "center",

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import ProgressBar from "react-native-progress/Bar";
@@ -7,17 +7,32 @@ import { CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell, } from "react-native-confirmation-code-field";
+import { ActivityIndicator } from "react-native-paper";
 
 const SignUpScreenFour = ({navigation}) => {
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const [activeButton, setActiveButton] = useState(null);
-
+  const [progress, setProgress] = useState(0.6);
+  const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (progress < 1) {
+        setProgress((prevProgress) => (prevProgress = 0.8));
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [progress]);
 
   const handleNumberPress = (number) => {
     if (value.length < 4) {
@@ -74,7 +89,7 @@ const SignUpScreenFour = ({navigation}) => {
         >
           <ProgressBar
             color={ColorTheme.lightBlue2}
-            progress={0.8}
+            progress={progress}
             width={120}
             height={7}
           />
@@ -139,20 +154,42 @@ const SignUpScreenFour = ({navigation}) => {
           alignSelf: "center",
           height: 48,
           width: 361,
-          borderRadius: 5,
+          borderRadius: 10,
           backgroundColor:
-            value.length != 4
-              ? ColorTheme.darkGray
-              : ColorTheme.darkBlue,
+            value.length != 4 ? ColorTheme.darkGray : ColorTheme.darkBlue,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",
+          ...Platform.select({
+            ios: {
+              shadowColor: 'black',
+              shadowOpacity: 0.3,
+              shadowRadius: 5,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+            },
+            android: {
+              elevation: 10,
+            },
+          }),
         }}
-        onPress={() => navigation.navigate("SignUpScreenFive")}
+        onPress={() => {
+          setLoading(true);
+          setTimeout(() => {
+            navigation.navigate("SignUpScreenFive");
+            setLoading(false);
+          }, 1500);
+        }}
       >
-        <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
-          Next
-        </Text>
+        {loading ? (
+          <ActivityIndicator size={34} color={ColorTheme.white} />
+        ) : (
+          <Text style={{ color: ColorTheme.white, fontWeight: "bold" }}>
+            Next
+          </Text>
+        )}
       </TouchableOpacity>
 
       <View
@@ -208,7 +245,7 @@ const styles = StyleSheet.create({
   cell: {
     width: 50,
     height: 50,
-    lineHeight: 47,
+    lineHeight:57,
     marginHorizontal: 10,
     borderRadius: 25,
     fontSize: 24,

@@ -11,6 +11,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import ColorTheme from "../theme/colorTheme";
 import PhoneInput from "react-native-phone-number-input";
+import { Button } from "react-native-paper";
 
 const LoginNewUserScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -30,24 +31,28 @@ const LoginNewUserScreen = ({navigation}) => {
     <KeyboardAvoidingView style={{flex:1}}  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View style={styles.container}>
       <View style={[styles.header, { marginVertical: 10 }]}>
-        <TouchableOpacity
-          style={{
-            alignSelf: "flex-end",
-            height: 35,
-            width: 154,
-            marginTop: 30,
-            backgroundColor: ColorTheme.lightBlue,
-            padding: 5,
-            alignItems: "center",
-            justifyContent:"center",
-            borderRadius:5,
-          }}
-          onPress={() => navigation.navigate("SignUpScreen")}
-        >
-          <Text style={{ color: ColorTheme.darkBlue, fontWeight: "bold" }}>
-            Create account
-          </Text>
-        </TouchableOpacity>
+      <Button
+            style={{
+              backgroundColor: ColorTheme.lightBlue,
+              width: 145,
+              position: "relative",
+              left: "60%",
+              padding: 0,
+              borderRadius: 8,
+            }}
+            mode="elevated"
+            onPress={() => navigation.navigate("LoginOldUser")}
+          >
+            <Text
+              style={{
+                color: ColorTheme.darkBlue,
+                fontWeight: "700",
+                fontSize: 16,
+              }}
+            >
+              Create account
+            </Text>
+          </Button>
         <Text style={styles.welcomeText}>Welcome back!</Text>
         <Text style={styles.descriptionText}>
           Enter your phone number to link this phone to your account
@@ -125,6 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 20,
+    marginTop:40,
   },
   header: {
     justifyContent: "start",
