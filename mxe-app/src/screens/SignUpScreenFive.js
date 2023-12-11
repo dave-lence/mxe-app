@@ -212,7 +212,7 @@ const SignUpScreenFive = ({ navigation }) => {
           } else {
             setLoading(true);
             setTimeout(() => {
-              navigation.navigate("HomeScreen");
+              navigation.navigate("BottomNav");
               setLoading(false);
             }, 1500);
           }

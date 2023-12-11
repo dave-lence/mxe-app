@@ -187,7 +187,8 @@ const SignUpScreen = ({ navigation }) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            marginVertical: 30,
+            marginVertical: 10,
+            marginTop:20,
           }}
         >
           <View

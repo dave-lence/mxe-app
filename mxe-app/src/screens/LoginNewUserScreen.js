@@ -41,7 +41,7 @@ const LoginNewUserScreen = ({navigation}) => {
               borderRadius: 8,
             }}
             mode="elevated"
-            onPress={() => navigation.navigate("LoginOldUser")}
+            onPress={() => navigation.navigate("SignUpScreen")}
           >
             <Text
               style={{

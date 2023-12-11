@@ -12,6 +12,7 @@ import SignUpScreenTwo from "./src/screens/SignUpScreenTwo";
 import SignUpScreenThree from "./src/screens/SignUpScreenThree";
 import SignUpScreenFour from "./src/screens/SignUpScreenFour";
 import SignUpScreenFive from "./src/screens/SignUpScreenFive";
+import BottomNav from "./src/navigation/BottomNav";
 
 
 const theme = {
@@ -33,7 +34,8 @@ export default function App() {
     <NavigationContainer>
       <PaperProvider theme={theme}>
         <StatusBar backgroundColor={ColorTheme.white} />
-        <NewUserStack />
+        {/* <NewUserStack /> */}
+        <BottomNav/>
       </PaperProvider>
     </NavigationContainer>
   );

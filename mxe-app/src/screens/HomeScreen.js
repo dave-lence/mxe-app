@@ -4,12 +4,14 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Image,
   
 } from "react-native";
 import React, { useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import FinanceScreen from "./SubScreens/FinanceScreen";
+import gridPng from "../assets/grid.png";
 
 const HomeScreen = () => {
   const [activeScreen, setActiveScreen] = useState("finance");
@@ -20,7 +22,7 @@ const HomeScreen = () => {
     <View
       style={{
         flex: 1,
-        backgroundColor: ColorTheme.lightGray,
+        backgroundColor: ColorTheme.lightGray3,
         paddingHorizontal: 15,
       }}
     >
@@ -32,7 +34,8 @@ const HomeScreen = () => {
           justifyContent: "space-between",
         }}
       >
-        <MaterialIcons name="grid-view" size={24} color={ColorTheme.black} />
+
+        <Image source={gridPng} style={{width:25, height:25,}}/>
 
         <View
           style={{

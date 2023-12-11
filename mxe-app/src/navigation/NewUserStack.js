@@ -12,6 +12,7 @@ import CodeVerificationScreen from '../screens/CodeVerificationScreen';
 import LoginOldUser from '../screens/LoginOldUser';
 import SignUpVerificationScreen from '../screens/SignUpVerificationScreen';
 import HomeScreen from '../screens/HomeScreen';
+import BottomNav from "../navigation/BottomNav"
 
  
 const Stack = createNativeStackNavigator();
@@ -28,7 +29,7 @@ const NewUserStack = () => {
     <Stack.Screen name="LoginNewUser" component={LoginNewUserScreen} options={{animationTypeForReplace:"push", animation:"slide_from_right"}}/>
     <Stack.Screen name="CodeVerificationScreen" component={CodeVerificationScreen} options={{animationTypeForReplace:"push", animation:"slide_from_right"}}/>
     <Stack.Screen name="LoginOldUser" component={LoginOldUser} options={{animationTypeForReplace:"push", animation:"slide_from_bottom"}}/>
-    <Stack.Screen name="HomeScreen" component={HomeScreen} options={{animationTypeForReplace:"push", animation:"fade_from_bottom"}}/>
+    <Stack.Screen name="BottomNav" component={BottomNav} options={{animationTypeForReplace:"push", animation:"fade_from_bottom"}}/>
    </Stack.Navigator>
   )
 }
