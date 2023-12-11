@@ -156,7 +156,7 @@ const SignUpScreenThree = ({ navigation }) => {
           width: 361,
           borderRadius: 10,
           backgroundColor:
-            value.length != 4 ? ColorTheme.darkGray : ColorTheme.darkBlue,
+            value.length != 4 ? ColorTheme.darkGray : ColorTheme.lightBlue2,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",

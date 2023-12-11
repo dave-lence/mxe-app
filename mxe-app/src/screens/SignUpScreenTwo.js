@@ -97,7 +97,7 @@ const SignUpScreenTwo = ({ navigation }) => {
           width: 361,
           borderRadius: 10,
           backgroundColor:
-            email == "" ? ColorTheme.darkGray : ColorTheme.darkBlue,
+            email == "" ? ColorTheme.darkGray : ColorTheme.lightBlue2,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",

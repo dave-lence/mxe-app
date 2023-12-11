@@ -186,7 +186,7 @@ const SignUpScreenFive = ({ navigation }) => {
           width: 361,
           borderRadius: 10  ,
           backgroundColor:
-            userName == "" ? ColorTheme.darkGray : ColorTheme.darkBlue,
+            userName == "" ? ColorTheme.darkGray : ColorTheme.lightBlue2,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",

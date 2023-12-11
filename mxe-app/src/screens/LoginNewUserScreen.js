@@ -34,9 +34,9 @@ const LoginNewUserScreen = ({navigation}) => {
       <Button
             style={{
               backgroundColor: ColorTheme.lightBlue,
-              width: 145,
+              width: 195,
               position: "relative",
-              left: "60%",
+              left: "45%",
               padding: 0,
               borderRadius: 8,
             }}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#FFFFFF",
     padding: 20,
-    marginTop:40,
+    marginTop:20,
   },
   header: {
     justifyContent: "start",

@@ -159,7 +159,7 @@ const SignUpVerificationScreen = ({ navigation }) => {
           position: "absolute",
           bottom: 20,
           left: 20,
-          backgroundColor: ColorTheme.darkBlue,
+          backgroundColor: ColorTheme.lightBlue2,
           borderRadius: 10,
           padding: 15,
           ...Platform.select({

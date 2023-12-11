@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import avater from "../assets/Avatar.png";
 import {
@@ -8,11 +8,12 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import { Button } from "react-native-paper";
+import { ActivityIndicator, Button, Modal } from "react-native-paper";
 
 const LoginOldUser = ({navigation}) => {
   const CELL_COUNT = 4;
   const [pin, setPin] = useState("");
+  const [loading, setLoading] = useState(false);
   const [activeButton, setActiveButton] = useState(null);
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     pin,
@@ -38,7 +39,20 @@ const LoginOldUser = ({navigation}) => {
       }, 100);
     }
   };
-  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "#", "0", "⌫", ]; // Empty string for empty space
+  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "#", "0", "⌫", ];
+
+  useEffect(() => {
+    if (pin.length == 4) {
+      setLoading(true);
+
+      setTimeout(() => {
+        navigation.navigate("HomeScreen");
+        setLoading(false);
+      }, 3000);
+    }
+  }, []);
+
+
   return (
     <View
       style={{
@@ -47,6 +61,12 @@ const LoginOldUser = ({navigation}) => {
         paddingHorizontal: 15,
       }}
     >
+      {loading && (
+        <FullScreenLoader
+          visible={loading}
+          position={loading ? "absolute" : null}
+        />
+      )}
       {/** header */}
       <View
         style={{
@@ -67,7 +87,7 @@ const LoginOldUser = ({navigation}) => {
             }}
             
             mode="elevated"
-            onPress={() => navigation.navigate("SignUpScreen")}
+            onPress={() => navigation.navigate("LoginNewUser")}
           >
             <Text
               style={{
@@ -119,7 +139,17 @@ const LoginOldUser = ({navigation}) => {
           ref={ref}
           {...props}
           value={pin}
-          onChangeText={setPin}
+        onChangeText={(text) => {
+          setPin(text)
+          if (text.length == 4) {
+              setLoading(true);
+        
+              setTimeout(() => {
+                navigation.navigate("HomeScreen");
+                setLoading(false);
+              }, 3000);
+            }
+        }}
           cellCount={CELL_COUNT}
           editable={false}
           rootStyle={styles.codeFieldRoot}
@@ -211,3 +241,31 @@ const styles = StyleSheet.create({
     borderColor: ColorTheme.darkBlue,
   },
 });
+
+
+
+const FullScreenLoader = ({ visible, position }) => {
+  return (
+    <Modal
+      transparent={true}
+      animationType="fade"
+      style={{ position: position }}
+      visible={visible}
+      onRequestClose={() => {}}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+                 
+        }}
+      >
+        <View style={{ marginTop:20,}}>
+          {/* Customize your loader here */}
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      </View>
+    </Modal>
+  );
+};

@@ -145,7 +145,7 @@ const SignUpScreen = ({ navigation }) => {
               borderRadius: 10,
               backgroundColor: !valid
                 ? ColorTheme.darkGray
-                : ColorTheme.darkBlue,
+                : ColorTheme.lightBlue2,
               alignItems: "center",
               marginTop: 38,
               justifyContent: "center",
@@ -211,54 +211,81 @@ const SignUpScreen = ({ navigation }) => {
 
         {/**sign up option buttons */}
 
-        <Button
-          mode="elevated"
-          icon={"apple"}
-          buttonColor={ColorTheme.black}
-          role="button"
-          rippleColor={ColorTheme.gray}
-          labelStyle={{ color: ColorTheme.white, width: "80%" }}
+        <TouchableOpacity
           style={{
-            width: "100%",
-            borderRadius: 10,
-            height: 48,
-            justifyContent: "center",
+            flexDirection: "row",
             alignItems: "center",
-            marginVertical: 10,
-          }}
-          onPress={() => {}}
-        >
-          <Text style={{ fontWeight: "bold" }}>Continue with Apple</Text>
-        </Button>
-
-        <Button
-          mode="outlined"
-          buttonColor={ColorTheme.white}
-          role="button"
-          rippleColor={ColorTheme.gray}
-          labelStyle={{ width: "80%" }}
-          style={{
-            width: "100%",
-            borderRadius: 10,
-            height: 48,
+            backgroundColor: ColorTheme.black,
             justifyContent: "center",
-            alignItems: "center",
-            marginVertical: 10,
+            height: 48,
+            marginVertical:20,
+            borderRadius: 10,
+            ...Platform.select({
+              ios: {
+                shadowColor: "black",
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+              },
+              android: {
+                elevation: 10,
+              },
+            }),
           }}
-          icon={"google"}
-          onPress={() => {}}
         >
-          <Text style={{ fontWeight: "bold", color: ColorTheme.black }}>
-            Continue with Google
+          <Image
+            source={appLogo}
+           
+            style={{ position: "absolute", left: 10,  height:24 , width:24 }}
+          />
+          <Text style={{ fontWeight: "bold", color: ColorTheme.white }}>
+            Continue with Apple
           </Text>
-        </Button>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: ColorTheme.white,
+            borderColor: ColorTheme.black,
+            justifyContent: "center",
+            height: 48,
+            borderRadius: 10,
+            ...Platform.select({
+              ios: {
+                shadowColor: "black",
+                shadowOpacity: 0.3,
+                shadowRadius: 5,
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+              },
+              android: {
+                elevation: 10,
+              },
+            }),
+          }}
+        >
+          <Image
+            source={googleLogo}
+           
+            style={{ position: "absolute", left: 10, height:24 , width:24}}
+          />
+          <Text style={{ fontWeight: "bold" }}>Continue with Google</Text>
+        </TouchableOpacity>
 
         <View
           style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 30,
+            // position: "absolute",
+            // left: 0,
+            // right: 0,
+            // bottom: 30,
+            marginTop: 150,
             paddingHorizontal: 15,
             alignItems: "center",
           }}

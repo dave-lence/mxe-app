@@ -119,9 +119,9 @@ const SignUpScreenOne = ({ navigation }) => {
           backgroundColor:
             firstName == ""
               ? ColorTheme.darkGray
-              : ColorTheme.darkBlue && lastName == ""
+              : ColorTheme.lightBlue2 && lastName == ""
               ? ColorTheme.darkGray
-              : ColorTheme.darkBlue,
+              : ColorTheme.lightBlue2,
           alignItems: "center",
           marginTop: 38,
           justifyContent: "center",
