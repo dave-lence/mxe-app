@@ -118,7 +118,7 @@ const SignUpScreen = ({ navigation }) => {
               marginRight: -40,
             }}
             withDarkTheme
-            codeTextStyle={{ height:22}}
+            codeTextStyle={{ height: Platform.OS === "ios" ? 18 : 22}}
             containerStyle={{
               width: "90",
             }}
