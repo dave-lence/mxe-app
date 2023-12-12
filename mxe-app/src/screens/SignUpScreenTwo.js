@@ -8,8 +8,8 @@ import {
 import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
-import ProgressBar from "react-native-progress/Bar";
-import { ActivityIndicator, TextInput } from "react-native-paper";
+import {  } from 'react-native-paper';
+import { ActivityIndicator, TextInput, ProgressBar, Colors } from "react-native-paper";
 
 const SignUpScreenTwo = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -68,6 +68,7 @@ const SignUpScreenTwo = ({ navigation }) => {
             progress={progress}
             width={120}
             height={7}
+            style={{backgroundColor:ColorTheme.lightBlue, height:7, borderRadius:5,}}
           />
           <Text style={{ fontWeight: "400", fontSize: 16 }}>Step 2 of 5</Text>
         </View>

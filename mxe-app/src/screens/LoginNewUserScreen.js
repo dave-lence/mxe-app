@@ -30,7 +30,7 @@ const LoginNewUserScreen = ({navigation}) => {
   return (
     <KeyboardAvoidingView style={{flex:1}}  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View style={styles.container}>
-      <View style={[styles.header, { marginVertical: 10 }]}>
+      <View style={[styles.header, { marginVertical: 10, marginTop: "15%", }]}>
       <Button
             style={{
               backgroundColor: ColorTheme.lightBlue,
@@ -39,6 +39,7 @@ const LoginNewUserScreen = ({navigation}) => {
               left: "45%",
               padding: 0,
               borderRadius: 8,
+              marginBottom:10,
             }}
             mode="elevated"
             onPress={() => navigation.navigate("SignUpScreen")}
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    padding: 20,
-    marginTop:20,
+    paddingHorizontal: 15,
+    
   },
   header: {
     justifyContent: "start",

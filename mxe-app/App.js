@@ -27,7 +27,7 @@ export default function App() {
   return (
     //   <>
     //   <StatusBar backgroundColor={ColorTheme.white} />
-    //  <SignUpScreenFive/>
+    //  <SignUpScreenThree/>
 
     //  </>
     <NavigationContainer>

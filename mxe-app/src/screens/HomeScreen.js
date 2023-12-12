@@ -29,7 +29,7 @@ const HomeScreen = () => {
       <View
         style={{
           flexDirection: "row",
-          marginTop: 48,
+          marginTop: "15%",
           alignItems: "center",
           justifyContent: "space-between",
         }}

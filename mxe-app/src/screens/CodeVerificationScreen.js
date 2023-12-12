@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Alert, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CodeField,
   Cursor,
@@ -8,18 +8,62 @@ import {
 } from "react-native-confirmation-code-field";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
+import { ActivityIndicator, Button, Modal } from "react-native-paper";
+
 
 const CodeVerificationScreen = ({navigation}) => {
   const CELL_COUNT = 4;
   const [value, setValue] = useState("");
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const [showButton, setShowButton] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(120); 
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
-    setValue,
+    setValue, 
   });
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (count > 0) {
+        setCount((prevCount) => prevCount - 1);
+      } else {
+        clearInterval(interval);
+        setShowButton(true);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [count]);
+
+  useEffect(() => {
+    if (value.length == 4) {
+      setLoading(true);
+
+      setTimeout(() => {
+        navigation.navigate("SignUpScreenOne");
+        setLoading(false);
+      }, 2000);
+    }
+  }, []);
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
+      {loading && (
+        <FullScreenLoader
+          visible={loading}
+          position={loading ? "absolute" : null}
+        />
+      )}
       <View
         style={{
           alignSelf: "center",
@@ -45,7 +89,17 @@ const CodeVerificationScreen = ({navigation}) => {
         {...props}        
         caretHidden={false}
         value={value}
-        onChangeText={setValue}
+        onChangeText={(text) => { 
+          setValue(text)
+          if (text.length == 4) {
+              setLoading(true);
+        
+              setTimeout(() => {
+                navigation.navigate("BottomNav");
+                setLoading(false);
+              }, 2000);
+            }
+      }}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
         keyboardType="number-pad"
@@ -69,16 +123,36 @@ const CodeVerificationScreen = ({navigation}) => {
           </Text>
         )}
       />
-      <Text
-        style={{
-          textAlign: "center",
-          marginTop: 30,
-          fontWeight: "bold",
-          color: ColorTheme.darkBlue,
-        }}
-      >
-        Resend
-      </Text>
+        {showButton ? (
+        <Button
+          mode="text"
+          style={{ marginTop: 30 }}
+          rippleColor={ColorTheme.white}
+          onPress={() => {}}
+          labelStyle={{
+            color: ColorTheme.darkBlue,
+            fontWeight: "bold",
+            fontSize: 18,
+          }}
+        >
+          Resend
+        </Button>
+      ) : (
+        <Text
+          style={{
+            textAlign: "center",
+            marginTop: 30,
+            fontSize: 16,
+            color: ColorTheme.black,
+          }}
+        >
+          {" "}
+          Resend in{" "}
+          <Text style={{ marginLeft: 10, color: ColorTheme.lightBlue2 }}>
+            {formatTime(count)}
+          </Text>
+        </Text>
+      )}
 
       <TouchableOpacity
         style={{
@@ -118,3 +192,29 @@ const styles = StyleSheet.create({
 });
 
 export default CodeVerificationScreen;
+
+const FullScreenLoader = ({ visible, position }) => {
+  return (
+    <Modal
+      transparent={true}
+      animationType="fade"
+      style={{ position: position }}
+      visible={visible}
+      onRequestClose={() => {}}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+                 
+        }}
+      >
+        <View style={{ marginTop:20,}}>
+          {/* Customize your loader here */}
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      </View>
+    </Modal>
+  );
+};

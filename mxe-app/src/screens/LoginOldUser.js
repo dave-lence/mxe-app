@@ -70,7 +70,7 @@ const LoginOldUser = ({navigation}) => {
       {/** header */}
       <View
         style={{
-          marginVertical: 40,
+          marginVertical: "15%",
           justifyContent: "center",
           alignItems: "center",
           alignContent: "center",
@@ -182,6 +182,8 @@ const LoginOldUser = ({navigation}) => {
           justifyContent: "space-evenly",
           marginTop: 40,
           flexWrap: "wrap",
+          width:"85%",
+          alignSelf:"center"
         }}
       >
         {numbers.map((number, index) => (

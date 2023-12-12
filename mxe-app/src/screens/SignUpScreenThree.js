@@ -2,14 +2,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
-import ProgressBar from "react-native-progress/Bar";
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, ProgressBar } from "react-native-paper";
 
 const SignUpScreenThree = ({ navigation }) => {
   const CELL_COUNT = 4;
@@ -94,6 +93,7 @@ const SignUpScreenThree = ({ navigation }) => {
             progress={progress}
             width={120}
             height={7}
+            style={{backgroundColor:ColorTheme.lightBlue, height:7, borderRadius:5,}}
           />
           <Text style={{ fontWeight: "400", fontSize: 16 }}>Step 3 of 5</Text>
         </View>
@@ -198,6 +198,8 @@ const SignUpScreenThree = ({ navigation }) => {
           justifyContent: "space-evenly",
           marginTop: 40,
           flexWrap: "wrap",
+          width:"85%",
+          alignSelf:"center"
         }}
       >
         {numbers.map((number, index) => (

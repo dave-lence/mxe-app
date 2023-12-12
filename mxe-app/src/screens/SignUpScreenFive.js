@@ -2,8 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
-import ProgressBar from "react-native-progress/Bar";
-import { ActivityIndicator, TextInput, Snackbar } from "react-native-paper";
+import { ActivityIndicator, TextInput, Snackbar, ProgressBar, } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUpScreenFive = ({ navigation }) => {
@@ -113,11 +112,12 @@ const SignUpScreenFive = ({ navigation }) => {
             marginTop: 20,
           }}
         >
-          <ProgressBar
+           <ProgressBar
             color={ColorTheme.lightBlue2}
             progress={progress}
             width={120}
             height={7}
+            style={{backgroundColor:ColorTheme.lightBlue, height:7, borderRadius:5,}}
           />
           <Text style={{ fontWeight: "400", fontSize: 16 }}>Step 5 of 5</Text>
         </View>

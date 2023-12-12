@@ -45,7 +45,7 @@ const SignUpScreen = ({ navigation }) => {
         {/** header */}
         <View
           style={{
-            marginTop: 40,
+            marginTop: "15%",
             justifyContent: "start",
             alignItems: "start",
           }}
@@ -118,7 +118,7 @@ const SignUpScreen = ({ navigation }) => {
               marginRight: -40,
             }}
             withDarkTheme
-            codeTextStyle={{ height: 22 }}
+            codeTextStyle={{ height:22}}
             containerStyle={{
               width: "90",
             }}
@@ -286,7 +286,7 @@ const SignUpScreen = ({ navigation }) => {
             // left: 0,
             // right: 0,
             // bottom: 30,
-            marginTop: 150,
+            marginTop: "50%",
             paddingHorizontal: 15,
             alignItems: "center",
           }}
