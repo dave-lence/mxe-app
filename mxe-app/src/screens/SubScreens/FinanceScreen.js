@@ -1,32 +1,67 @@
 import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    ScrollView,
-    ImageBackground,
-    Image,
-  } from "react-native";
-  import React, { useState } from "react";
-  import ColorTheme from "../../theme/colorTheme";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import SmallCircleContainer from "../../components/SmallCircleContainer";
-  import exchnageImg from "../../assets/exchange.png";
-  import arrowUpRightImg from "../../assets/arrow-up-right.png";
-  import arrowDownLeftImg from "../../assets/arrow-down-left.png";
-  import chevronDropDownImg from "../../assets/chevron-down.png";
-  import backgountImg from "../../assets/blavkimg.jpg";
-  import dividerImg from "../../assets/Divider.png";
-  import pencilImg from "../../assets/pencil.png";
-  import user02Img from "../../assets/user-02.png";
-  import payBillImg from "../../assets/invoice.png";
-  import exchnage02 from "../../assets/exchangetwo.png";
-  import ads from "../../assets/ADS.png";
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
+import React, { useRef, useState } from "react";
+import ColorTheme from "../../theme/colorTheme";
+import { MaterialIcons } from "@expo/vector-icons";
+import SmallCircleContainer from "../../components/SmallCircleContainer";
+import exchnageImg from "../../assets/exchange.png";
+import arrowUpRightImg from "../../assets/arrow-up-right.png";
+import arrowDownLeftImg from "../../assets/arrow-down-left.png";
+import chevronDropDownImg from "../../assets/chevron-down.png";
+import backgountImg from "../../assets/blavkimg.jpg";
+import dividerImg from "../../assets/Divider.png";
+import pencilImg from "../../assets/pencil.png";
+import user02Img from "../../assets/user-02.png";
+import payBillImg from "../../assets/invoice.png";
+import exchnage02 from "../../assets/exchangetwo.png";
+import { ww } from "../../../responsive";
+import HomeCarouselCard from "../../components/HomeCarouselCard";
+import Carousel from "react-native-reanimated-carousel";
 
 const FinanceScreen = () => {
+  const width = Dimensions.get("window").width;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselRef = useRef(null);
+  const totalSlides = 5;
+
+  const handleScroll = (event) => {
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    setCurrentIndex(
+      Math.round(contentOffsetX / Dimensions.get("window").width)
+    );
+    setCurrentPage(currentIndex);
+  };
+
+  const renderIndicators = () => {
+    const indicators = [];
+    for (let i = 0; i < totalSlides; i++) {
+      indicators.push(
+        <View
+          key={i}
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: 4,
+            margin: 4,
+            backgroundColor: currentPage === i ? "black" : "gray", // Change colors based on current page
+          }}
+        />
+      );
+    }
+    return indicators;
+  };
+
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ flexDirection: "row" }}>
+    <View  style={{ flex: 1 }}>
+      <View style={{ flexDirection: "row", gap: ww(8) }}>
         <View
           style={{
             justifyContent: "center",
@@ -36,10 +71,15 @@ const FinanceScreen = () => {
             borderRadius: 16,
             marginRight: 11,
             backgroundColor: ColorTheme.black,
-            position:'relative'
+            position: "relative",
           }}
         >
-            <MaterialIcons name="verified" color={ColorTheme.lightBlue2} size={18} style={{position:"absolute", top:-3, right:-10}}/>
+          <MaterialIcons
+            name="verified"
+            color={ColorTheme.lightBlue2}
+            size={18}
+            style={{ position: "absolute", top: -3, right: -10 }}
+          />
           <MaterialIcons name="person" size={16} color={ColorTheme.white} />
         </View>
         <View
@@ -389,69 +429,62 @@ const FinanceScreen = () => {
       </View>
 
       {/*************************** carousel slide ************************/}
+      <Carousel
+        loop
+        width={width}
+        style={{ alignSelf: "center" }}
+        height={ww(160)}
+        ref={carouselRef}
+        onScroll={handleScroll}
+        autoPlay={true}
+        data={[...new Array(6).keys()]}
+        scrollAnimationDuration={1000}
+        onSnapToItem={(index) => {
+          setCurrentIndex(index);
+
+          console.log("current index:", index);
+        }}
+        renderItem={({ index }) => <HomeCarouselCard key={index} />}
+      />
       <View
         style={{
-          marginTop: 30,
-          overflow: "hidden",
-          alignSelf: "center",
-          width: "100%",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 5,
         }}
       >
-        <View
-          style={{
-            height: 120,
-            width: 354,
-            overflow: "hidden",
-            borderRadius: 40,
-            backgroundColor: ColorTheme.black,
-            position: "relative",
-          }}
-        >
-          <View style={{ position: "absolute", top: 20, left: 25 }}>
-            <Text
-              style={{
-                color: ColorTheme.white,
-                width: 215,
-                marginBottom: 20,
-                fontSize: 14,
-                fontWeight: "bold",
-              }}
-            >
-              Secure Online Transaction with MXE Virtual Card
-            </Text>
-            <TouchableOpacity
-              style={{
-                height: 32,
-                width: 117,
-                borderRadius: 8,
-                backgroundColor: ColorTheme.lightBlue,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ fontWeight: "700", fontSize: 16 }}>
-                I want one!
-              </Text>
-            </TouchableOpacity>
-          </View>
+        {renderIndicators()}
+      </View>
 
+      {/************************* TRANSACTION ACTIVITIES********************************** */}
+      <View style={{ marginTop: ww(24) }}>
+        <View
+          style={{ flexDirection: "row", alignItems: "center", gap: ww(3) }}
+        >
           <View
             style={{
-              position: "absolute",
-              top: 2,
-              width: 121,
-              left: 140,
-              height: 120,
+              height: ww(8),
+              borderRadius: 10,
+              backgroundColor: ColorTheme.lightBlue2,
+              width: ww(8),
             }}
-          >
-            <Image source={ads} style={{ width: 200, height: 118 }} />
-          </View>
+          ></View>
+          <Text style={{ fontSize: ww(16), fontWeight: "700" }}>
+            Recent Activities
+          </Text>
+        </View>
+
+        <View style={{justifyContent:"center", alignItems:"center", paddingVertical:ww(67)}}>
+          <Text>No Activity yet.</Text>
         </View>
       </View>
+
+
     </View>
-  )
-}
+  );
+};
 
-export default FinanceScreen
+export default FinanceScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

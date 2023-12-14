@@ -15,7 +15,8 @@ const ColorTheme = {
     lightGray3: '#F5F5F7',
     darkBlue: '#082078',
     lightBlue2:"#0828B1",
-    darkGray3:'#272726'
+    darkGray3:'#272726',
+    blueLoader:'#BBD4F7'
   };
   
   export default ColorTheme;

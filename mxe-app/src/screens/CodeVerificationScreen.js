@@ -9,6 +9,7 @@ import {
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, Button, Modal } from "react-native-paper";
+import { ww } from "../../responsive";
 
 
 const CodeVerificationScreen = ({navigation}) => {
@@ -157,11 +158,14 @@ const CodeVerificationScreen = ({navigation}) => {
       <TouchableOpacity
         style={{
           position: "absolute",
-          bottom: 20,
-          left: 20,
+          bottom: ww(20),
+          left: ww(20),
           backgroundColor: ColorTheme.darkBlue,
-          borderRadius: 10,
-          padding: 15,
+          borderRadius: 5,
+          height: ww(48),
+            width: ww(48),
+            justifyContent: "center",
+            alignItems: "center",
         }}
         onPress={() => {
           navigation.goBack()

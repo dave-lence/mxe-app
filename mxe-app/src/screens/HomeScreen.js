@@ -12,6 +12,7 @@ import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import FinanceScreen from "./SubScreens/FinanceScreen";
 import gridPng from "../assets/grid.png";
+import bell from "../assets/bell.png";
 
 const HomeScreen = () => {
   const [activeScreen, setActiveScreen] = useState("finance");
@@ -102,14 +103,10 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <MaterialIcons
-          name="notifications"
-          size={24}
-          color={ColorTheme.black}
-        />
+        <Image source={bell} style={{width:25, height:25,}}/>
       </View>
 
-      <ScrollView style={{ marginTop: 29 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 29 }}>
         {activeScreen === "finance" ? <FinanceScreen /> : <WalletScreen />}
       </ScrollView>
     </View>

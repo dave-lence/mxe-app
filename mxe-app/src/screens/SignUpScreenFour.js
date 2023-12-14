@@ -7,6 +7,8 @@ import { CodeField,
   useBlurOnFulfill,
   useClearByFocusCell, } from "react-native-confirmation-code-field";
 import { ActivityIndicator, ProgressBar, } from "react-native-paper";
+import { ww } from "../../responsive";
+
 
 const SignUpScreenFour = ({navigation}) => {
   const CELL_COUNT = 4;
@@ -152,8 +154,8 @@ const SignUpScreenFour = ({navigation}) => {
         disabled={value.length != 4 ? true : false}
         style={{
           alignSelf: "center",
-          height: 48,
-          width: 361,
+          height: ww(48),
+          width: '100%',
           borderRadius: 10,
           backgroundColor:
             value.length != 4 ? ColorTheme.darkGray : ColorTheme.lightBlue2,

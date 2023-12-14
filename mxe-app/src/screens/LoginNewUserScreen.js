@@ -11,13 +11,14 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import ColorTheme from "../theme/colorTheme";
 import PhoneInput from "react-native-phone-number-input";
-import { Button } from "react-native-paper";
+import CustomButton from "../components/CustomButton";
+import { ww } from "../../responsive";
 
 const LoginNewUserScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
   const [valid, setValid] = useState(false);
-  const [autoFocus, setAutoFocus] = useState(true);
+  const [autoFocus, setAutoFocus] = useState(false);
 
   const phoneInput = useRef(null);
 
@@ -36,46 +37,51 @@ const LoginNewUserScreen = ({ navigation }) => {
     >
       <View style={styles.container}>
         <View style={[styles.header, { marginVertical: 10, marginTop: "15%" }]}>
-          <Button
-            style={{
-              backgroundColor: ColorTheme.lightBlue,
-              width: 195,
-              position: "relative",
-              left: "45%",
-              padding: 0,
-              borderRadius: 8,
-              marginBottom: 10,
-            }}
-            mode="elevated"
+          <CustomButton
+            width={ww(154)}
+            height={ww(32)}
+            borderRadius={5}
+            fontSize={16}
+            textColor={ColorTheme.darkBlue}
             onPress={() => navigation.navigate("SignUpScreen")}
-          >
-            <Text
-              style={{
-                color: ColorTheme.darkBlue,
-                fontWeight: "700",
-                fontSize: 16,
-              }}
-            >
-              Create account
-            </Text>
-          </Button>
+            btnTile={"Create account"}
+            position={"relative"}
+            left={ww(230)}
+            backgroundColor={ColorTheme.lightBlue}
+            custonStyle={{
+              ...Platform.select({
+                ios: {
+                  shadowColor: "black",
+                  shadowOpacity: 0.3,
+                  shadowRadius: 5,
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                },
+                android: {
+                  elevation: 10,
+                },
+              }),
+            }}
+          />
+
           <Text style={styles.welcomeText}>Welcome back!</Text>
           <Text style={styles.descriptionText}>
             Enter your phone number to link this phone to your account
           </Text>
         </View>
-
         <View
           style={{
             backgroundColor: ColorTheme.white,
             borderColor: autoFocus ? ColorTheme.lightBlue2 : ColorTheme.gray,
-            borderWidth: 1,
-            height: 55,
+            borderWidth: 2,
+
+            paddingHorizontal: 3,
             borderRadius: 6,
             justifyContent: "center",
             alignItems: "center",
-            marginTop: 30,
-            padding: 5,
+            marginTop: ww(34),
           }}
         >
           <PhoneInput
@@ -84,23 +90,31 @@ const LoginNewUserScreen = ({ navigation }) => {
             defaultCode="NG"
             layout="first"
             value={phoneNumber}
+            disableArrowIcon={false}
             onChangeText={handlePhoneInputChange}
             onChangeFormattedText={(text) => {
               setFormattedValue(text);
             }}
             countryPickerButtonStyle={{
-              marginRight: -40,
+              marginRight: -10,
+              marginTop: Platform.OS === "ios" ? 1 : 0,
+              width:ww(80)
             }}
             withDarkTheme
-            codeTextStyle={{ height: Platform.OS === "ios" ? 18 : 22 }}
+            codeTextStyle={{ height: Platform.OS === "ios" ? 16 : 22 }}
             containerStyle={{
               width: "90",
             }}
             textContainerStyle={{
               backgroundColor: "white",
+              height: 48,
+            }}
+            textInputStyle={{
+              height: 48,
             }}
             textInputProps={{
-              keyboardAppearance: "dark",
+              onFocus:() => setAutoFocus(true),
+              keyboardAppearance: "light",
               keyboardType:
                 Platform.OS === "ios" ? "name-phone-pad" : "number-pad",
             }}
@@ -111,7 +125,7 @@ const LoginNewUserScreen = ({ navigation }) => {
         <Text
           style={{
             fontSize: 16,
-            marginTop: 18,
+            marginTop: ww(16),
             color: ColorTheme.lightGray2,
           }}
         >
@@ -121,11 +135,14 @@ const LoginNewUserScreen = ({ navigation }) => {
         <TouchableOpacity
           style={{
             position: "absolute",
-            bottom: 20,
-            right: 20,
+            bottom: ww(20),
+            justifyContent: "center",
+            alignItems: "center",
+            right: ww(20),
             backgroundColor: !valid ? ColorTheme.darkGray : ColorTheme.darkBlue,
-            borderRadius: 10,
-            padding: 15,
+            borderRadius: 5,
+            height: ww(48),
+            width: ww(48),
           }}
           onPress={() => {
             if (valid) {
@@ -150,7 +167,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
   },
   header: {
     justifyContent: "start",
@@ -159,7 +176,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontWeight: "bold",
     fontSize: 38,
-    marginVertical: 5,
+    marginTop: ww(14),
   },
   descriptionText: {
     fontSize: 16,

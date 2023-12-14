@@ -4,6 +4,8 @@ import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, TextInput, Snackbar, ProgressBar, } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ww } from "../../responsive";
+
 
 const SignUpScreenFive = ({ navigation }) => {
   const [error, setError] = useState(false);
@@ -182,8 +184,8 @@ const SignUpScreenFive = ({ navigation }) => {
         disabled={userName == "" ? true : false}
         style={{
           alignSelf: "center",
-          height: 48,
-          width: 361,
+          height: ww(48),
+          width: '100%',
           borderRadius: 10  ,
           backgroundColor:
             userName == "" ? ColorTheme.darkGray : ColorTheme.lightBlue2,

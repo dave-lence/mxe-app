@@ -8,6 +8,8 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
+import { ww } from "../../responsive";
+
 import { ActivityIndicator, ProgressBar } from "react-native-paper";
 
 const SignUpScreenThree = ({ navigation }) => {
@@ -152,8 +154,8 @@ const SignUpScreenThree = ({ navigation }) => {
         disabled={value.length != 4 ? true : false}
         style={{
           alignSelf: "center",
-          height: 48,
-          width: 361,
+          height: ww(48),
+          width: '100%',
           borderRadius: 10,
           backgroundColor:
             value.length != 4 ? ColorTheme.darkGray : ColorTheme.lightBlue2,

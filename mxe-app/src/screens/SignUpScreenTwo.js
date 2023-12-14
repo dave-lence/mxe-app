@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import {  } from 'react-native-paper';
+import { ww } from "../../responsive";
 import { ActivityIndicator, TextInput, ProgressBar, Colors } from "react-native-paper";
 
 const SignUpScreenTwo = ({ navigation }) => {
@@ -94,8 +95,8 @@ const SignUpScreenTwo = ({ navigation }) => {
         disabled={email == "" ? true : false}
         style={{
           alignSelf: "center",
-          height: 48,
-          width: 361,
+          height: ww(48),
+          width: '100%',
           borderRadius: 10,
           backgroundColor:
             email == "" ? ColorTheme.darkGray : ColorTheme.lightBlue2,

@@ -113,6 +113,7 @@ const SignUpVerificationScreen = ({ navigation }) => {
                 alignSelf: "center",
                 alignItems: "center",
                 alignContent: "center",
+                backfaceVisibility: isFocused ? ColorTheme.darkBlue : ColorTheme.gray
               },
             ]}
             onLayout={getCellOnLayoutHandler(index)}

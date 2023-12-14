@@ -13,7 +13,18 @@ const BottomNav = () => {
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: ColorTheme.lightBlue2,
-        tabBarStyle:{height:64, elevation:10, paddingBottom:8 }
+        tabBarStyle:{height:64, 
+          ...Platform.select({
+          ios:{
+            shadowColor:ColorTheme.black,
+            shadowOffset:{width:0, height:2},
+            shadowOpacity:0.5,
+            shadowRadius:2,
+          },
+          android:{
+            elevation:10
+          }
+        }), paddingBottom: Platform.OS === 'android' ? 8  : 18}
       }}
       
 
