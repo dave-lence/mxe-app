@@ -75,7 +75,7 @@ const LoginNewUserScreen = ({ navigation }) => {
           style={{
             backgroundColor: ColorTheme.white,
             borderColor: autoFocus ? ColorTheme.lightBlue2 : ColorTheme.gray,
-            borderWidth: 2,
+            borderWidth: autoFocus ? 2 : 1,
 
             paddingHorizontal: 3,
             borderRadius: 6,
@@ -107,10 +107,10 @@ const LoginNewUserScreen = ({ navigation }) => {
             }}
             textContainerStyle={{
               backgroundColor: "white",
-              height: 48,
+              height: ww(48),
             }}
             textInputStyle={{
-              height: 48,
+              height: ww(48),
             }}
             textInputProps={{
               onFocus:() => setAutoFocus(true),
