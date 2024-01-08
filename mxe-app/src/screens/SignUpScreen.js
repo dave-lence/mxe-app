@@ -58,7 +58,7 @@ const SignUpScreen = ({ navigation }) => {
             width={ww(76)}
             height={ww(32)}
             borderRadius={5}
-            fontSize={16}
+            fontSize={ww(16)}
             textColor={ColorTheme.darkBlue}
             onPress={() => navigation.navigate("LoginOldUser")}
             btnTile={"Login"}
@@ -83,7 +83,14 @@ const SignUpScreen = ({ navigation }) => {
             }}
           />
 
-          <Text style={{ fontWeight: "bold", fontSize: 34, marginTop: ww(32) }}>
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: ww(34),
+              lineHeight: ww(38),
+              marginTop: ww(32),
+            }}
+          >
             Create your account
           </Text>
           <Text
@@ -93,6 +100,7 @@ const SignUpScreen = ({ navigation }) => {
               alignItems: "center",
               marginTop: ww(8),
               color: ColorTheme.lightGray2,
+              fontSize: ww(15),
             }}
           >
             Start building your design system with our component library{" "}
@@ -106,11 +114,17 @@ const SignUpScreen = ({ navigation }) => {
             borderColor: autoFocus ? ColorTheme.lightBlue2 : ColorTheme.gray,
             borderWidth: autoFocus ? 2 : 1,
 
+            shadowColor: autoFocus ? ColorTheme.lightBlue2 : null,
+            shadowOffsret: autoFocus ?  { width: 1, height: 2 } : {width: 0, height:0},
+            shadowOpacity:autoFocus ? 0.25 : 0,
+            shadowRadius: autoFocus ? 3.84 : 0,
+            elevation: autoFocus ? 10 : 0,
+
             paddingHorizontal: 3,
             borderRadius: 6,
             justifyContent: "center",
             alignItems: "center",
-            marginTop: 30,
+            marginTop: ww(30),
           }}
         >
           <PhoneInput
@@ -119,7 +133,7 @@ const SignUpScreen = ({ navigation }) => {
             defaultCode="NG"
             layout="first"
             value={phoneNumber}
-           disableArrowIcon={false}
+            disableArrowIcon={false}
             onChangeText={handlePhoneInputChange}
             onChangeFormattedText={(text) => {
               setFormattedValue(text);
@@ -127,7 +141,7 @@ const SignUpScreen = ({ navigation }) => {
             countryPickerButtonStyle={{
               marginRight: -10,
               marginTop: Platform.OS === "ios" ? 1 : 0,
-              width:ww(80)
+              width: ww(80),
             }}
             withDarkTheme
             codeTextStyle={{ height: Platform.OS === "ios" ? 16 : 22 }}
@@ -305,7 +319,7 @@ const SignUpScreen = ({ navigation }) => {
         <View
           style={{
             marginTop: ww(270),
-            paddingHorizontal: 15,
+            paddingHorizontal: ww(15),
             alignItems: "center",
           }}
         >

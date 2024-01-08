@@ -12,6 +12,7 @@ const SignUpScreenOne = ({ navigation }) => {
   const [lastName, setLastName] = useState("");
   const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [autoFocus, setAutoFocos] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -76,7 +77,14 @@ const SignUpScreenOne = ({ navigation }) => {
       </View>
 
       {/** name fields */}
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginVertical: 23 }}>
+      <Text
+        style={{
+          fontSize: ww(24),
+          lineHeight: ww(24),
+          fontWeight: "700",
+          marginVertical: ww(23),
+        }}
+      >
         What’s your legal name?
       </Text>
 
@@ -86,10 +94,20 @@ const SignUpScreenOne = ({ navigation }) => {
         blurOnSubmit={true}
         error={error}
         enablesReturnKeyAutomatically={true}
+        outlineStyle={{
+          shadowColor: autoFocus ? ColorTheme.lightBlue2 : null,
+          shadowOffsret: autoFocus
+            ? { width: 1, height: 2 }
+            : { width: 0, height: 0 },
+          shadowOpacity: autoFocus ? 0.25 : 0,
+          shadowRadius: autoFocus ? 3.84 : 0,
+          elevation: autoFocus ? 10 : 0,
+        }}
         activeOutlineColor={ColorTheme.lightBlue2}
         style={{ backgroundColor: ColorTheme.white, marginBottom: 10 }}
         mode="outlined"
         onChangeText={async (text) => {
+          setAutoFocos(true);
           setFirstName(text);
           console.log(text);
           await AsyncStorage.setItem("firstName", text);
@@ -98,10 +116,20 @@ const SignUpScreenOne = ({ navigation }) => {
 
       <TextInput
         label="Last Name"
+      
         value={lastName}
         blurOnSubmit={true}
         error={error}
         enablesReturnKeyAutomatically={true}
+        outlineStyle={{
+          shadowColor: autoFocus ? ColorTheme.lightBlue2 : null,
+          shadowOffsret: autoFocus
+            ? { width: 1, height: 2 }
+            : { width: 0, height: 0 },
+          shadowOpacity: autoFocus ? 0.25 : 0,
+          shadowRadius: autoFocus ? 3.84 : 0,
+          elevation: autoFocus ? 10 : 0,
+        }}
         activeOutlineColor={ColorTheme.lightBlue2}
         style={{ backgroundColor: ColorTheme.white, marginBottom: 0 }}
         mode="outlined"
@@ -119,7 +147,7 @@ const SignUpScreenOne = ({ navigation }) => {
         style={{
           alignSelf: "center",
           height: ww(48),
-          width: '100%',
+          width: "100%",
           borderRadius: 10,
           backgroundColor:
             firstName == ""

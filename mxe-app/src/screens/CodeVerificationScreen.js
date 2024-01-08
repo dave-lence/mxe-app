@@ -158,7 +158,7 @@ const CodeVerificationScreen = ({navigation}) => {
       <TouchableOpacity
         style={{
           position: "absolute",
-          bottom: ww(20),
+          top:ww(697),
           left: ww(20),
           backgroundColor: ColorTheme.darkBlue,
           borderRadius: 5,

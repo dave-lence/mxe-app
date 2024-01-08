@@ -95,10 +95,10 @@ const SignUpScreenFour = ({navigation}) => {
             height={7}
             style={{backgroundColor:ColorTheme.lightBlue, height:7, borderRadius:5,}}
           />
-          <Text style={{ fontWeight: "400", fontSize: 16 }}>Step 4 of 5</Text>
+          <Text style={{ fontWeight: "400", fontSize: ww(16) }}>Step 4 of 5</Text>
         </View>
 
-        <Text style={{ fontWeight: "bold", fontSize: 24, marginTop: 25 }}>
+        <Text style={{ fontWeight: "bold", lineHeight:ww(28), fontSize: ww(24), marginTop: 25 }}>
           Confirm your 4-digit PIN{" "}
         </Text>
         <Text
@@ -108,6 +108,7 @@ const SignUpScreenFour = ({navigation}) => {
             alignItems: "center",
             marginTop: 8,
             color: ColorTheme.lightGray2,
+            fontSize: ww(16)
           }}
         >
           Start building your design system with our component library{" "}

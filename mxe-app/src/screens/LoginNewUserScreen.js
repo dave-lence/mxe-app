@@ -41,7 +41,7 @@ const LoginNewUserScreen = ({ navigation }) => {
             width={ww(154)}
             height={ww(32)}
             borderRadius={5}
-            fontSize={16}
+            fontSize={ww(16)}
             textColor={ColorTheme.darkBlue}
             onPress={() => navigation.navigate("SignUpScreen")}
             btnTile={"Create account"}
@@ -66,7 +66,7 @@ const LoginNewUserScreen = ({ navigation }) => {
             }}
           />
 
-          <Text style={styles.welcomeText}>Welcome back!</Text>
+          <Text style={styles.welcomeText}>Welcome back</Text>
           <Text style={styles.descriptionText}>
             Enter your phone number to link this phone to your account
           </Text>
@@ -76,7 +76,11 @@ const LoginNewUserScreen = ({ navigation }) => {
             backgroundColor: ColorTheme.white,
             borderColor: autoFocus ? ColorTheme.lightBlue2 : ColorTheme.gray,
             borderWidth: autoFocus ? 2 : 1,
-
+            shadowColor: autoFocus ? ColorTheme.lightBlue2 : null,
+            shadowOffsret: autoFocus ?  { width: 1, height: 2 } : {width: 0, height:0},
+            shadowOpacity:autoFocus ? 0.25 : 0,
+            shadowRadius: autoFocus ? 3.84 : 0,
+            elevation: autoFocus ? 10 : 0,
             paddingHorizontal: 3,
             borderRadius: 6,
             justifyContent: "center",
@@ -124,9 +128,10 @@ const LoginNewUserScreen = ({ navigation }) => {
 
         <Text
           style={{
-            fontSize: 16,
+            fontSize: ww(16),
             marginTop: ww(16),
             color: ColorTheme.lightGray2,
+            
           }}
         >
           Enter your phone number to link this phone to your account
@@ -135,7 +140,7 @@ const LoginNewUserScreen = ({ navigation }) => {
         <TouchableOpacity
           style={{
             position: "absolute",
-            bottom: ww(20),
+            top:ww(697),
             justifyContent: "center",
             alignItems: "center",
             right: ww(20),
@@ -174,13 +179,14 @@ const styles = StyleSheet.create({
     alignItems: "start",
   },
   welcomeText: {
-    fontWeight: "bold",
-    fontSize: 38,
+    fontWeight: "700",
+    fontSize: ww(32),
+    lineHeight:ww(38),
     marginTop: ww(14),
   },
   descriptionText: {
-    fontSize: 16,
-
+    fontSize: ww(16),
+    lineHeight:ww(24),
     color: ColorTheme.lightGray2,
   },
   phonecontainer: {

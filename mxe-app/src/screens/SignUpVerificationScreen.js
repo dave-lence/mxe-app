@@ -9,6 +9,7 @@ import {
 import ColorTheme from "../theme/colorTheme";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ActivityIndicator, Button, Modal } from "react-native-paper";
+import { ww } from "../../responsive";
 
 const SignUpVerificationScreen = ({ navigation }) => {
   const CELL_COUNT = 4;
@@ -126,14 +127,16 @@ const SignUpVerificationScreen = ({ navigation }) => {
       {showButton ? (
         <Button
           mode="text"
-          style={{ marginTop: 30 }}
+          style={{ marginTop: 30, color: ColorTheme.lightBlue2, fontSize:ww(16), fontWeight:'700' }}
           rippleColor={ColorTheme.white}
           onPress={() => {}}
           labelStyle={{
             color: ColorTheme.darkBlue,
             fontWeight: "bold",
             fontSize: 18,
+            color: ColorTheme.lightBlue2, fontSize:ww(16), fontWeight:'700'
           }}
+
         >
           Resend
         </Button>
@@ -144,11 +147,12 @@ const SignUpVerificationScreen = ({ navigation }) => {
             marginTop: 30,
             fontSize: 16,
             color: ColorTheme.black,
+            color: ColorTheme.lightBlue2, fontSize:ww(16), fontWeight:'700'
           }}
         >
           {" "}
           Resend in{" "}
-          <Text style={{ marginLeft: 10, color: ColorTheme.lightBlue2 }}>
+          <Text style={{ marginLeft: 10, color: ColorTheme.black, fontSize:ww(16), fontWeight:'400' }}>
             {formatTime(count)}
           </Text>
         </Text>
@@ -158,11 +162,11 @@ const SignUpVerificationScreen = ({ navigation }) => {
       <TouchableOpacity
         style={{
           position: "absolute",
-          bottom: 20,
-          left: 20,
+          top:ww(697),
+          left: ww(20),
           backgroundColor: ColorTheme.lightBlue2,
-          borderRadius: 10,
-          padding: 15,
+          borderRadius: ww(10),
+          padding: ww(15),
           ...Platform.select({
             ios: {
               shadowColor: "black",

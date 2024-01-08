@@ -16,6 +16,7 @@ const SignUpScreenTwo = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [progress, setProgress] = useState(0.2);
   const [loading, setLoading] = useState(false);
+  const [autoFocus, setAutoFocus] = useState(true)
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
   useEffect(() => {
@@ -85,6 +86,15 @@ const SignUpScreenTwo = ({ navigation }) => {
         value={email}
         blurOnSubmit={true}
         enablesReturnKeyAutomatically={true}
+        outlineStyle={{
+          shadowColor: autoFocus ? ColorTheme.lightBlue2 : null,
+          shadowOffsret: autoFocus
+            ? { width: 1, height: 2 }
+            : { width: 0, height: 0 },
+          shadowOpacity: autoFocus ? 0.25 : 0,
+          shadowRadius: autoFocus ? 3.84 : 0,
+          elevation: autoFocus ? 10 : 0,
+        }}
         activeOutlineColor={ColorTheme.lightBlue2}
         style={{ backgroundColor: ColorTheme.white, marginBottom: 10 }}
         mode="outlined"

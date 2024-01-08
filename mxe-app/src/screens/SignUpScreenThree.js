@@ -17,6 +17,7 @@ const SignUpScreenThree = ({ navigation }) => {
   const [value, setValue] = useState("");
   const [activeButton, setActiveButton] = useState(null);
   const [progress, setProgress] = useState(0.4);
+  const [autoFocus, setAutoFocus] = useState(true);
   const [loading, setLoading] = useState(false);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -100,7 +101,7 @@ const SignUpScreenThree = ({ navigation }) => {
           <Text style={{ fontWeight: "400", fontSize: 16 }}>Step 3 of 5</Text>
         </View>
 
-        <Text style={{ fontWeight: "bold", fontSize: 24, marginTop: 25 }}>
+        <Text style={{ fontWeight: "bold", fontSize: ww(24), lineHeight:ww(28), marginTop: 25 }}>
           Create your 4-digit PIN{" "}
         </Text>
         <Text
@@ -110,6 +111,7 @@ const SignUpScreenThree = ({ navigation }) => {
             alignItems: "center",
             marginTop: 8,
             color: ColorTheme.lightGray2,
+            fontSize:ww(16)
           }}
         >
           Start building your design system with our component library{" "}
